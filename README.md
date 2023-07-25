@@ -1,0 +1,2 @@
+# McWeather
+Weather application project
