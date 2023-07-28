@@ -2,7 +2,7 @@ from datetime import datetime
 
 
 def get_day_and_time(datetime_str):
-    #Function to get day of week and time of day (morning, afternoon, evening)
+    # Function to get day of week and time of day (morning, afternoon, evening)
     date_time = datetime.strptime(datetime_str, "%Y-%m-%d %H:%M:%S")
     day_of_week = date_time.strftime("%A")
     hour = date_time.hour
@@ -13,7 +13,8 @@ def get_day_and_time(datetime_str):
 def convert_to_fahrenheit(celsius_temp):
     return (celsius_temp * 9/5) + 32
 
-def display_weather(weather_data):
+
+def display_weather(weather_data, unit):
     if weather_data is None:
         print("Error fetching weather data. Please try again later.")
         return
@@ -22,19 +23,23 @@ def display_weather(weather_data):
     city_name = weather_data["name"]
     main_weather = weather_data["weather"][0]["main"]
     description = weather_data["weather"][0]["description"]
-    temperature = convert_to_fahrenheit(weather_data["main"]["temp"])
+    celsius_temp = weather_data["main"]["temp"]
     humidity = weather_data["main"]["humidity"]
     wind_speed = weather_data["wind"]["speed"]
 
     # Display the weather information to the user
     print(f"Weather forecast for {city_name}:")
     print(f"Condition: {main_weather} - {description}")
-    print(f"Temperature: {temperature:.1f}°F")
+    if unit == "imperial":
+        fahrenheit_temp = convert_to_fahrenheit(celsius_temp)
+        print(f"Temperature: {fahrenheit_temp:.1f}°F")
+    else:
+        print(f"Temperature: {celsius_temp:.1f}°C")
     print(f"Humidity: {humidity}%")
     print(f"Wind Speed: {wind_speed} m/s")
 
 
-def display_forecast(forecast_data):
+def display_forecast(forecast_data, unit):
     if forecast_data is None:
         print("Error fetching forecast data. Please try again later.")
         return
@@ -49,7 +54,7 @@ def display_forecast(forecast_data):
         date_time = forecast["dt_txt"]
         main_weather = forecast["weather"][0]["main"]
         description = forecast["weather"][0]["description"]
-        temperature = convert_to_fahrenheit(forecast["main"]["temp"])
+        celsius_temp = forecast["main"]["temp"]
         humidity = forecast["main"]["humidity"]
         wind_speed = forecast["wind"]["speed"]
 
@@ -58,10 +63,13 @@ def display_forecast(forecast_data):
 
         print(f"\n{day_of_week} - {time_of_day}")
         print(f"Condition: {main_weather} - {description}")
-        print(f"Temperature: {temperature:.1f}°F")
+        if unit == "imperial":
+            fahrenheit_temp = convert_to_fahrenheit(celsius_temp)
+            print(f"Temperature: {fahrenheit_temp:.1f}°F")
+        else:
+            print(f"Temperature: {celsius_temp:.1f}°C")
         print(f"Humidity: {humidity}%")
         print(f"Wind Speed: {wind_speed} m/s")
-
 
 
 # Test the function
@@ -73,7 +81,7 @@ if __name__ == "__main__":
         "main": {"temp": 25.5, "humidity": 70},
         "wind": {"speed": 3.5},
     }
-    display_weather(weather_data)
+    display_weather(weather_data, 'imperial')
     forecast_data = {
         "city": {"name": "New York"},
         "list": [
@@ -86,4 +94,4 @@ if __name__ == "__main__":
             # Additional forecast entries for other days and times
         ]
     }
-    display_forecast(forecast_data)
+    display_forecast(forecast_data, 'imperial')
