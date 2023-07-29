@@ -14,4 +14,4 @@ Project is in Alpha but plan to add the following features:
 - Allow users to specify units (e.g., Celsius or Fahrenheit) for temperature.
 - Implement error handling and feedback messages to guide users when there are issues with their inputs or API requests.
 - Add a feature to save frequently accessed locations for quick weather updates.
-- Add GUI with either Tkinter or PyQt
+- Add GUI with either Tkinter or PyQt or possibly as a Flask web app
