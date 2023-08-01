@@ -15,3 +15,11 @@ Project is in Alpha but plan to add the following features:
 - Implement error handling and feedback messages to guide users when there are issues with their inputs or API requests.
 - Add a feature to save frequently accessed locations for quick weather updates.
 - Add GUI with either Tkinter or PyQt or possibly as a Flask web app
+- Weather icons from:
+  - Iconset: [Weather Color](https://www.iconfinder.com/iconsets/weather-color-2)
+  - Author: [Sihan Liu](https://www.iconfinder.com/Neolau1119)
+  - License: Free for commercial use ()
+  - Download date: 2023-07-29
+
+
+
