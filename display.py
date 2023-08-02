@@ -11,7 +11,7 @@ def get_day_and_time(datetime_str):
 
 
 def convert_to_fahrenheit(celsius_temp):
-    return (celsius_temp * 9/5) + 32
+    return round(((celsius_temp * 9/5) + 32))
 
 
 def display_weather(weather_data, unit):
@@ -72,8 +72,48 @@ def display_forecast(forecast_data, unit):
         print(f"Wind Speed: {wind_speed} m/s")
 
 def process_forecast(forecast_data, unit_key):
-    processed_forecast = []
+    if forecast_data is None:
+        print("Error fetching forecast data. Please try again later.")
+        return
+    forecast_dict = {}
 
+    # Parse the forecast data to extract relevant information
+    city_name = forecast_data["city"]["name"]
+    forecast_list = forecast_data["list"]
+
+    # Display the future weather forecast for the next 5 days
+    print(f"Weather forecast for {city_name} - Next 5 days:")
+    for forecast in forecast_list:
+        date_time = forecast["dt_txt"]
+        main_weather = forecast["weather"][0]["main"]
+        description = forecast["weather"][0]["description"]
+        icon = forecast["weather"][0]["icon"]
+        celsius_temp = forecast["main"]["temp"]
+        humidity = forecast["main"]["humidity"]
+        wind_speed = forecast["wind"]["speed"]
+
+
+        # Get day of the week and time of day
+        date_time = datetime.strptime(date_time, "%Y-%m-%d %H:%M:%S")
+        day_of_week = date_time.strftime("%A")
+        hour = date_time.hour
+        time_of_day = str(hour) + ":00"
+        if unit_key == "imperial":
+            temp = convert_to_fahrenheit(celsius_temp)
+        else:
+            temp = celsius_temp
+
+        if day_of_week not in forecast_dict:
+            forecast_dict[day_of_week] = {}
+        forecast_dict[day_of_week][time_of_day] = {}
+        forecast_dict[day_of_week][time_of_day]["main"] = main_weather
+        forecast_dict[day_of_week][time_of_day]["temp"] = temp
+        forecast_dict[day_of_week][time_of_day]["description"] = description
+        forecast_dict[day_of_week][time_of_day]["humidity"] = humidity
+        forecast_dict[day_of_week][time_of_day]["wind"] = wind_speed
+        forecast_dict[day_of_week][time_of_day]["icon"] = "https://openweathermap.org/img/wn/" + icon + "@2x.png"
+    print(forecast_dict)
+    return forecast_dict
 
 # Test the function
 if __name__ == "__main__":
@@ -84,19 +124,25 @@ if __name__ == "__main__":
         "main": {"temp": 25.5, "humidity": 70},
         "wind": {"speed": 3.5},
     }
-    display_weather(weather_data, 'imperial')
+    #display_weather(weather_data, 'imperial')
     forecast_data = {
         "city": {"name": "New York"},
         "list": [
             {
                 "dt_txt": "2023-07-26 09:00:00",
-                "weather": [{"main": "Rain", "description": "light rain"}],
+                "weather": [{"main": "Rain", "description": "light rain", "icon": "01d"}],
                 "main": {"temp": 22.5, "humidity": 80},
                 "wind": {"speed": 4.5},
             },
-            # Additional forecast entries for other days and times
+            {
+                "dt_txt": "2023-07-26 12:00:00",
+                "weather": [{"main": "Clear", "description": "light rain", "icon": "02c"}],
+                "main": {"temp": 22.5, "humidity": 80},
+                "wind": {"speed": 4.5},
+            },
         ]
     }
-    display_forecast(forecast_data, 'imperial')
+    #display_forecast(forecast_data, 'imperial')
+    print(process_forecast(forecast_data, 'imperial'))
 
 

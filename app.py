@@ -2,7 +2,7 @@
 
 from flask import Flask, render_template, request
 from api import get_weather_data, get_weather_forecast
-from display import display_weather, display_forecast
+from display import process_forecast
 from settings import DEFAULT_LOCATION, DEFAULT_UNIT
 from config import API_KEY
 from datetime import datetime
@@ -16,6 +16,7 @@ app = Flask(__name__)
 @app.template_filter('datetimeformat')
 def datetimeformat(value, format='%Y-%m-%d'):
     return datetime.strptime(value, '%Y-%m-%d %H:%M:%S').strftime(format)
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -42,7 +43,11 @@ def index():
     sunset_time = datetime.fromtimestamp(weather_data['sys']['sunset']).time()
     is_daytime = sunrise_time <= current_time <= sunset_time
 
-    return render_template('index.html', weather_data=weather_data, forecast_data=forecast_data, unit=unit_key, is_daytime=is_daytime)
+    forecast_dict = process_forecast(forecast_data, unit_key)
+
+    return render_template('index.html', weather_data=weather_data,
+                           forecast_dict=forecast_dict, unit=unit_key, is_daytime=is_daytime,
+                           sunrise_time=sunrise_time, sunset_time=sunset_time)
 
 
 if __name__ == '__main__':

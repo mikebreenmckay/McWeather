@@ -4,6 +4,7 @@
 <html>
 <head>
     <title>Weather Forecast Application</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage.css') }}">
 </head>
 <body>
     <h1>Weather Forecast Application</h1>
@@ -24,30 +25,26 @@
         <h2>Current Weather</h2>
         <p>Location: {{ weather_data.name }}</p>
         <p>Temperature: {{ weather_data.main.temp }}°{{ 'C' if unit == 'metric' else 'F' }}</p>
-        <p>Sunrise: {{ datetime.fromtimestamp(weather_data.sys.sunrise).strftime('%H:%M') }}</p>
-        <p>Sunset: {{ datetime.fromtimestamp(weather_data.sys.sunset).strftime('%H:%M') }}</p>
-        <img src="{{ url_for('static', filename=weather_icon_day if is_daytime else weather_icon_night) }}" alt="{{ weather_data.weather[0].description }}">
+        <p>Sunrise: {{ sunrise_time }}</p>
+        <p>Sunset: {{ sunset_time }}</p>
+      <!--  <img src="{{ url_for('static', filename=weather_icon_day if is_daytime else weather_icon_night) }}" alt="{{ weather_data.weather[0].description }}"> -->
         <!-- Add more weather details as needed -->
     {% endif %}
 
-    {% if forecast_data %}
+    {% if forecast_dict %}
         <h2>Weather Forecast for the Next Few Days</h2>
         <div class="forecast-container">
-            {% for forecast in forecast_data.list %}
-                <div class="forecast-day">
-                    <p><strong>Date:</strong> {{ forecast.dt_txt | datetimeformat('%Y-%m-%d') }}</p>
-                    <img src="{{ url_for('static', filename=forecast.weather[0].icon + '-day.png') }}" alt="{{ forecast.weather[0].description }}">
-                    <p><strong>6 AM:</strong> {{ forecast.main.temp }}°{{ 'C' if unit == 'metric' else 'F' }}</p>
-                    <!-- Add more time-specific forecast details as needed -->
-                    <img src="{{ url_for('static', filename=forecast.weather[0].icon + '-noon.png') }}" alt="{{ forecast.weather[0].description }}">
-                    <p><strong>12 PM:</strong> {{ forecast.main.temp }}°{{ 'C' if unit == 'metric' else 'F' }}</p>
-                    <!-- Add more time-specific forecast details as needed -->
-                    <img src="{{ url_for('static', filename=forecast.weather[0].icon + '-evening.png') }}" alt="{{ forecast.weather[0].description }}">
-                    <p><strong>6 PM:</strong> {{ forecast.main.temp }}°{{ 'C' if unit == 'metric' else 'F' }}</p>
-                    <!-- Add more time-specific forecast details as needed -->
-                    <img src="{{ url_for('static', filename=forecast.weather[0].icon + '-night.png') }}" alt="{{ forecast.weather[0].description }}">
-                    <p><strong>12 AM:</strong> {{ forecast.main.temp }}°{{ 'C' if unit == 'metric' else 'F' }}</p>
-                    <!-- Add more time-specific forecast details as needed -->
+            {% for day in forecast_dict.keys() %}
+                <div class="box forecast-day">
+                    <h3>{{ day }}</h3>
+                    {% for time in forecast_dict[day].keys() %}
+                        <div class="box2 forecast-time">
+                            <p><strong>Time:</strong> {{ time }}</p>
+                            <p><strong>Temp:</strong> {{ forecast_dict[day][time]["temp"] }}°{{ 'C' if unit == 'metric' else 'F' }}</p>
+                            <p><strong>Wind:</strong> {{ forecast_dict[day][time]["wind"] }}°{{ 'C' if unit == 'metric' else 'F' }}</p>
+                            <img src="{{ forecast_dict[day][time]["icon"] }}" alt="{{ forecast_dict[day][time]["description"] }}">
+                        </div>
+                    {% endfor %}
                 </div>
             {% endfor %}
         </div>

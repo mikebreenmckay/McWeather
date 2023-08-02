@@ -1,0 +1,27 @@
+h2 {
+    color: red;
+}
+
+.forecast-day {
+    vertical-align: top;
+    width: 80%;
+    text-align: justify;        /* Needed by IE */
+    text-align-last: justify;
+    -moz-text-align-last: justify;
+    padding: 3px;
+}
+
+.box {
+    display: inline-block;
+    /*-webkit-box-shadow: 5px 5px 15px 5px #000000;
+    box-shadow: 5px 5px 15px 5px #000000;*/
+    width: 150px;
+    padding: 5px
+    text-align: center;
+    margin: auto;
+}
+
+.box2 {
+    border: 2px solid #1C6EA4;
+    padding: 5px;
+}
