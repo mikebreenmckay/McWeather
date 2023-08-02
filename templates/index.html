@@ -8,7 +8,16 @@
 <body>
     <h1>Weather Forecast Application</h1>
     <form method="post">
-        <!-- Location input and temperature unit selection as before -->
+        <label for="location">Location:</label>
+        <input type="text" name="location" id="location" value="{{ weather_data.name }}" required>
+        <br>
+        <label for="unit">Temperature Unit:</label>
+        <select name="unit" id="unit">
+            <option value="Celsius" {% if unit == 'metric' %}selected{% endif %}>Celsius</option>
+            <option value="Fahrenheit" {% if unit == 'imperial' %}selected{% endif %}>Fahrenheit</option>
+        </select>
+        <br>
+        <input type="submit" value="Get Weather Forecast">
     </form>
 
     {% if weather_data %}

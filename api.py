@@ -49,5 +49,7 @@ if __name__ == "__main__":
     api_key = API_KEY
     location = "27705"  # Replace with the location you want to fetch the weather for
     weather_data = get_weather_data(api_key, location)
+    forecast_data = get_weather_forecast(api_key, location)
     if weather_data:
         print(weather_data)
+        print(forecast_data)

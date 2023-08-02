@@ -71,6 +71,9 @@ def display_forecast(forecast_data, unit):
         print(f"Humidity: {humidity}%")
         print(f"Wind Speed: {wind_speed} m/s")
 
+def process_forecast(forecast_data, unit_key):
+    processed_forecast = []
+
 
 # Test the function
 if __name__ == "__main__":
@@ -95,3 +98,5 @@ if __name__ == "__main__":
         ]
     }
     display_forecast(forecast_data, 'imperial')
+
+

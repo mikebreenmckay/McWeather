@@ -11,6 +11,7 @@ api_key = API_KEY
 
 app = Flask(__name__)
 
+
 # Custom Jinja2 filter for date formatting
 @app.template_filter('datetimeformat')
 def datetimeformat(value, format='%Y-%m-%d'):
@@ -42,6 +43,7 @@ def index():
     is_daytime = sunrise_time <= current_time <= sunset_time
 
     return render_template('index.html', weather_data=weather_data, forecast_data=forecast_data, unit=unit_key, is_daytime=is_daytime)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
