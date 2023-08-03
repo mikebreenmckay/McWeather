@@ -3,53 +3,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Weather Forecast Application</title>
+    <title>McWeather</title>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage.css') }}">
 </head>
 <body>
-    <h1>Weather Forecast Application</h1>
-    <form method="post">
-        <label for="location">Location:</label>
-        <br>
-        <input type="text" name="location" id="location" value="{{ weather_data.name }}" required>
-        <br>
-        <label for="unit">Temperature Unit:</label>
-        <br>
-        <select name="unit" id="unit">
-            <option value="Celsius" {% if unit == 'metric' %}selected{% endif %}>Celsius</option>
-            <option value="Fahrenheit" {% if unit == 'imperial' %}selected{% endif %}>Fahrenheit</option>
-        </select>
-        <br>
-        <input class="myButton" type="submit" value="Get Weather Forecast">
-    </form>
+    <div class = header>
+        <h1>McWeather</h1>
+        <form method="post">
+            <label for="location">Location:</label>
+            <br>
+            <input type="text" name="location" id="location" value="{{ weather_data.name }}" required>
+            <br>
+            <label for="unit">Temperature Unit:</label>
+            <br>
+            <select name="unit" id="unit">
+                <option value="Celsius" {% if unit == 'metric' %}selected{% endif %}>Celsius</option>
+                <option value="Fahrenheit" {% if unit == 'imperial' %}selected{% endif %}>Fahrenheit</option>
+            </select>
+            <br>
+            <input class="myButton" type="submit" value="Get Weather Forecast">
+        </form>
 
-    {% if weather_data %}
-    <div class="currWeather">
-        <div class="title">
-            <h2>Current Weather for {{ weather_data.name }}</h2>
+        {% if weather_data %}
+        <div class="currWeather">
+            <div class="title">
+                <h2>Current Weather for {{ weather_data.name }}</h2>
+            </div>
+
+            <span class="curr currentIcon">
+                <img src="{{ "https://openweathermap.org/img/wn/" + weather_data.weather[0].icon + "@2x.png"}}" alt="{{ weather_data.weather[0].description }}">
+                <p>{{ weather_data.weather[0].description }}</p>
+            </span>
+            <span class="curr currentTemp">
+                <h3>Temperature</h3>
+                <p>{{ weather_data.main.temp }}°{{ 'C' if unit == 'metric' else 'F' }}</p>
+            </span>
+            <span class="curr currentWind">
+                <h3>Wind</h3>
+                <p>{{ weather_data.wind.speed }}{{ ' m/s' if unit == 'metric' else ' mph' }}</p>
+            </span>
+            <span class="curr currentWind">
+                <h3>Humidity</h3>
+                <p>{{ weather_data.main.humidity }}</p>
+            </span>
+            <span class="curr currSunrise">
+                <h3>Sunrise</h3>
+                <p>{{ sunrise_time }}</p>
+            </span>
+            <span class="curr currSunset">
+                <h3>Sunset</h3>
+                <p>{{ sunset_time }}</p>
+            </span>
         </div>
-
-        <span class="curr currentIcon">
-            <img src="{{ "https://openweathermap.org/img/wn/" + weather_data.weather[0].icon + "@2x.png"}}" alt="{{ weather_data.weather[0].description }}">
-        </span>
-        <span class="curr currentTemp">
-            <h3>Temperature</h3>
-            <p>{{ weather_data.main.temp }}°{{ 'C' if unit == 'metric' else 'F' }}</p>
-        </span>
-        <span class="curr currentWind">
-            <h3>Wind</h3>
-            <p>{{ weather_data.wind.speed }}{{ ' m/s' if unit == 'metric' else ' mph' }}</p>
-        </span>
-        <span class="curr currSunrise">
-            <h3>Sunrise</h3>
-            <p>{{ sunrise_time }}</p>
-        </span>
-        <span class="curr currSunset">
-            <h3>Sunset</h3>
-            <p>{{ sunset_time }}</p>
-        </span>
     </div>
-
     {% endif %}
 
     {% if forecast_dict %}

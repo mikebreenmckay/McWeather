@@ -4,7 +4,7 @@ body {
     background-color: #1C6EA4;
     color: #ffffff;
     font-family: 'Poppins', sans-serif;
-    padding: 15px;
+    padding-top: 600px; /* Add top padding to create space for the fixed header */
     margin: 0;
 }
 
@@ -14,6 +14,17 @@ h1 {
 
 h2 {
     color: #ffffff;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
 }
 
 input[type=text] {
@@ -35,32 +46,38 @@ select {
     width: 100%;
     text-align: center;
     display: inline-block;
+    vertical-align: top;
 }
 
 .curr {
     display: inline-block;
-    vertical-align: center;
+    vertical-align: top;
     margin: 10px 10px;
+    height: 165px;
+    width: 125px;
 }
 
 .forecast-container {
     width: 100%;
     text-align: center;
+    overflow-y: auto;
+
+
 }
 
 .forecast-day {
+    flex: 0 0 20%;
     vertical-align: top;
-    width: 80%;
     text-align: justify;        /* Needed by IE */
     text-align-last: justify;
     -moz-text-align-last: justify;
     padding: 3px;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .box {
     display: inline-block;
-    /*-webkit-box-shadow: 5px 5px 15px 5px #000000;
-    box-shadow: 5px 5px 15px 5px #000000;*/
     width: 150px;
     padding: 5px
     text-align: center;
