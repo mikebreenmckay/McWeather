@@ -4,14 +4,14 @@ import requests
 from config import API_KEY
 
 
-def get_weather_data(api_key, location):
+def get_weather_data(api_key, location, unit_key='metric'):
     base_url = "http://api.openweathermap.org/data/2.5/weather"
 
     # Create the parameters for the API request
     params = {
         "q": location,
         "appid": api_key,
-        "units": "metric",  # You can change this to "imperial" for Fahrenheit
+        "units": unit_key,  # You can change this to "imperial" for Fahrenheit
     }
 
     try:
@@ -23,14 +23,14 @@ def get_weather_data(api_key, location):
         print(f"Error: {e}")
         return None
 
-def get_weather_forecast(api_key, location):
+def get_weather_forecast(api_key, location, unit_key="imperial"):
     base_url = "http://api.openweathermap.org/data/2.5/forecast"
 
     # Create the parameters for the API request
     params = {
         "q": location,
         "appid": api_key,
-        "units": "metric",  # You can change this to "imperial" for Fahrenheit
+        "units": unit_key,  # You can change this to "imperial" for Fahrenheit
     }
 
     try:

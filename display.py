@@ -88,7 +88,7 @@ def process_forecast(forecast_data, unit_key):
         main_weather = forecast["weather"][0]["main"]
         description = forecast["weather"][0]["description"]
         icon = forecast["weather"][0]["icon"]
-        celsius_temp = forecast["main"]["temp"]
+        temp = forecast["main"]["temp"]
         humidity = forecast["main"]["humidity"]
         wind_speed = forecast["wind"]["speed"]
 
@@ -98,10 +98,6 @@ def process_forecast(forecast_data, unit_key):
         day_of_week = date_time.strftime("%A")
         hour = date_time.hour
         time_of_day = str(hour) + ":00"
-        if unit_key == "imperial":
-            temp = convert_to_fahrenheit(celsius_temp)
-        else:
-            temp = celsius_temp
 
         if day_of_week not in forecast_dict:
             forecast_dict[day_of_week] = {}
@@ -112,7 +108,6 @@ def process_forecast(forecast_data, unit_key):
         forecast_dict[day_of_week][time_of_day]["humidity"] = humidity
         forecast_dict[day_of_week][time_of_day]["wind"] = wind_speed
         forecast_dict[day_of_week][time_of_day]["icon"] = "https://openweathermap.org/img/wn/" + icon + "@2x.png"
-    print(forecast_dict)
     return forecast_dict
 
 # Test the function

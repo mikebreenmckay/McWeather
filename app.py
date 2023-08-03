@@ -27,13 +27,14 @@ def index():
         location = DEFAULT_LOCATION
         unit = DEFAULT_UNIT
 
-    weather_data = get_weather_data(api_key, location)
-    forecast_data = get_weather_forecast(api_key, location)
-
     if unit == 'Celsius':
         unit_key = 'metric'
     else:
         unit_key = 'imperial'
+
+    # Get the weather
+    weather_data = get_weather_data(api_key, location, unit_key)
+    forecast_data = get_weather_forecast(api_key, location, unit_key)
 
     # Get current local time
     current_time = datetime.now().time()
